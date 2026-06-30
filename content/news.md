@@ -1,0 +1,5 @@
+- **2026.01** &mdash; Two papers accepted: *Monocular Normal Estimation via Shading Sequence Estimation* (**ICLR 2026 Oral**) and *SAM2Matting* (**ECCV 2026**).
+- **2025.09** &mdash; Joined SUFE as an Assistant Professor. **Recruiting** PhD / MSc students and research interns &mdash; see below.
+- **2025.08** &mdash; The journal version of *MeViS* is accepted to **TPAMI 2025**.
+- **2024.02** &mdash; *Referring Image Editing* accepted to **CVPR 2024**.
+- **2023.02** &mdash; *GRES: Generalized Referring Expression Segmentation* accepted to **CVPR 2023**.

@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chang Liu — Homepage</title>
+  <meta name="description" content="Chang Liu — Assistant Professor at SUFE. Computer Vision, Machine Learning, Multi-modal Learning.">
+  <link rel="canonical" href="index.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bibtex-parse-js@0.0.24/bibtexParse.js"></script>
+  <style>
+    *{ box-sizing:border-box; }
+    html,body{ margin:0; padding:0; }
+    body{ background:#fbfaf7; color:#1b1a17; font-family:'IBM Plex Sans',system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
+    a{ color:#8a1c1c; text-decoration:none; }
+
+    .wrap{ max-width:780px; margin:0 auto; padding:72px 28px 80px; }
+
+    /* header */
+    .header{ display:flex; gap:30px; align-items:flex-start; flex-wrap:wrap; }
+    .photo{ position:relative; width:128px; height:160px; flex:none; border-radius:4px; overflow:hidden; background:#efeae1; }
+    .photo img{ width:128px; height:160px; object-fit:cover; display:block; }
+    .photo .placeholder{
+      position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+      text-align:center;
+      background:repeating-linear-gradient(135deg,#efeae1,#efeae1 7px,#e7e1d6 7px,#e7e1d6 14px);
+      font-family:'IBM Plex Mono',monospace; font-size:10px; color:#9a9183;
+      letter-spacing:.05em; padding:8px; line-height:1.5;
+    }
+    .head-info{ flex:1; min-width:260px; }
+    h1.name{ margin:0; font-size:30px; font-weight:600; letter-spacing:-.01em; line-height:1.15; }
+    h1.name .zh{ color:#9a9183; font-weight:400; font-size:22px; }
+    .title{ margin-top:8px; font-size:16px; color:#33312c; line-height:1.5; }
+    .affiliation{ margin-top:3px; font-size:14.5px; color:#6f6a60; line-height:1.55; }
+    .areas{ margin-top:12px; font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:.06em; color:#8a1c1c; text-transform:uppercase; }
+    nav.links{ margin-top:16px; display:flex; flex-wrap:wrap; gap:8px; }
+    nav.links a{
+      display:inline-flex; align-items:center; font-family:'IBM Plex Mono',monospace;
+      font-size:12px; letter-spacing:.03em; color:#33312c; border:1px solid #ddd6ca;
+      border-radius:999px; padding:5px 13px; transition:border-color .12s, color .12s;
+    }
+    nav.links a:hover{ border-color:#8a1c1c; color:#8a1c1c; }
+
+    /* section labels */
+    section{ margin-top:44px; }
+    .label{ font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:#8a1c1c; font-weight:600; margin-bottom:14px; }
+
+    /* prospective callout */
+    section.prospective{ background:#f4efe6; border:1px solid #e9e1d3; border-radius:8px; padding:24px 26px; }
+    section.prospective .label{ margin-bottom:10px; }
+
+    /* publications */
+    .pub-head{ display:flex; align-items:baseline; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:6px; }
+    .pub-head .label{ margin-bottom:0; }
+    .metrics{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:#8d877b; }
+    .metrics a{ color:#8d877b; border-bottom:1px solid #d8d2c6; }
+    .pub-list{ display:flex; flex-direction:column; }
+    .pub{ display:grid; grid-template-columns:96px 1fr; gap:18px; padding:16px 0; border-top:1px solid #ece8e0; }
+    .pub-meta{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; line-height:1.5; padding-top:2px; }
+    .pub-venue{ color:#8a1c1c; font-weight:500; }
+    .pub-award{ display:inline-block; margin-top:5px; background:#8a1c1c; color:#fff; padding:1px 7px; border-radius:3px; font-size:10px; letter-spacing:.04em; }
+    .pub-title{ font-size:15.5px; font-weight:600; line-height:1.4; color:#1b1a17; }
+    .pub-authors{ margin-top:4px; font-size:13.5px; color:#6f6a60; line-height:1.5; }
+    .pub-links{ margin-top:7px; display:flex; gap:8px; flex-wrap:wrap; }
+    .pub-links a{ font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.03em; color:#8a1c1c; border:1px solid #e0d2cf; border-radius:3px; padding:2px 8px; transition:background .12s, color .12s; }
+    .pub-links a:hover{ background:#8a1c1c; color:#fff; }
+    .pub-foot{ margin-top:16px; font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:#8d877b; }
+    .pub-foot a{ border-bottom:1px solid #d8d2c6; }
+    .pub-note{ margin-top:12px; font-family:'IBM Plex Mono',monospace; font-size:11px; color:#8d877b; }
+    .corr-mark{ color:#8a1c1c; font-weight:600; margin-left:1px; }
+
+    /* contact */
+    .contact-grid{ display:grid; grid-template-columns:88px 1fr; gap:8px 16px; font-size:14.5px; color:#33312c; line-height:1.5; }
+    .contact-key{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:#8d877b; padding-top:2px; text-transform:uppercase; letter-spacing:.06em; }
+    .contact-grid a{ border-bottom:1px solid rgba(138,28,28,.25); }
+
+    /* footer */
+    footer{ margin-top:60px; padding-top:20px; border-top:1px solid #ece8e0; font-family:'IBM Plex Mono',monospace; font-size:11px; color:#a39b8d; display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px; }
+
+    /* prose (markdown) */
+    .prose{ font-size:16px; line-height:1.72; color:#33312c; }
+    .prose p{ margin:0 0 14px; }
+    .prose strong{ color:#1b1a17; font-weight:600; }
+    .prose a{ color:#8a1c1c; border-bottom:1px solid rgba(138,28,28,.25); }
+    .prose a:hover{ border-bottom-color:#8a1c1c; }
+    .prose h3{ font-size:12px; letter-spacing:.12em; text-transform:uppercase; font-family:'IBM Plex Mono',monospace; color:#8a1c1c; font-weight:600; margin:24px 0 10px; }
+    .prose ul{ margin:0 0 14px; padding:0; list-style:none; }
+    .prose li{ position:relative; padding:4px 0 4px 18px; }
+    .prose li::before{ content:''; position:absolute; left:2px; top:13px; width:5px; height:5px; border-radius:50%; background:#c9b9a3; }
+    .news .prose li{ padding-left:0; }
+    .news .prose li::before{ display:none; }
+    .news .prose ul{ display:flex; flex-direction:column; }
+    .news .prose li{ display:block; border-top:1px solid #ece8e0; padding:11px 0; line-height:1.6; }
+    .news .prose li:first-child{ border-top:none; }
+    .news .prose li strong:first-child{ font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:#8a1c1c; margin-right:6px; }
+  </style>
+</head>
+<body>
+  <main class="wrap" id="app"></main>
+
+  <script>
+    const ME = 'Chang Liu';
+
+    async function get(path) {
+      try { const r = await fetch(path); if (!r.ok) throw 0; return await r.text(); }
+      catch (e) { return ''; }
+    }
+
+    function md(t) {
+      if (!window.marked || !t) return '';
+      try { return window.marked.parse(t); } catch (e) { return ''; }
+    }
+
+    function clean(s) { return (s || '').replace(/[{}]/g, '').trim(); }
+
+    function escapeHtml(s) {
+      return String(s == null ? '' : s)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function escapeRegExp(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+
+    function loadImage(src) {
+      return new Promise(res => {
+        const im = new Image();
+        im.onload = () => res(true);
+        im.onerror = () => res(false);
+        im.src = src;
+      });
+    }
+
+    function parseBib(src) {
+      if (!src || !window.bibtexParse) return [];
+      let entries = [];
+      try { entries = window.bibtexParse.toJSON(src); } catch (e) { return []; }
+      return entries
+        .filter(e => e.entryType && e.entryType.toLowerCase() !== 'comment' && e.entryTags)
+        .map(e => {
+          const t = e.entryTags;
+          const authors = clean(t.author).replace(/\s+and\s+/g, ', ');
+          const flag = (v) => clean(v).toLowerCase() === ME.toLowerCase()
+            || /^(true|yes|1)$/i.test(clean(v));
+          const isCorresponding = flag(t.corresponding);
+          const isCoFirst = flag(t.cofirst);
+          let marks = '';
+          if (isCoFirst) marks += '<sup class="corr-mark">*</sup>';
+          if (isCorresponding) marks += '<sup class="corr-mark">&dagger;</sup>';
+          const meBold = '<strong style="color:#1b1a17;font-weight:600;">' + ME + '</strong>' + marks;
+          const authorsHtml = escapeHtml(authors)
+            .replace(new RegExp(escapeRegExp(ME), 'g'), meBold);
+          const links = [];
+          if (t.pdf) links.push({ label: 'PDF', url: t.pdf });
+          if (t.code) links.push({ label: 'Code', url: t.code });
+          if (t.project) links.push({ label: 'Project', url: t.project });
+          if (t.arxiv) links.push({ label: 'arXiv', url: t.arxiv });
+          return {
+            key: e.citationKey,
+            title: clean(t.title),
+            authorsHtml,
+            venue: clean(t.venue) || clean(t.booktitle) || clean(t.journal),
+            year: parseInt(t.year, 10) || 0,
+            award: clean(t.award),
+            corresponding: isCorresponding,
+            cofirst: isCoFirst,
+            links
+          };
+        })
+        .sort((a, b) => b.year - a.year);
+    }
+
+    function photoHtml(profile, hasPhoto) {
+      const photo = (profile && profile.photo) || 'assets/profile.jpg';
+      if (hasPhoto) {
+        return '<img src="' + escapeHtml(photo) + '" alt="' + escapeHtml(profile.name || '') + '">';
+      }
+      return '<div class="placeholder">drop photo &rarr; assets/profile.jpg</div>';
+    }
+
+    function sectionShown(sections, key) { return (sections || {})[key] !== false; }
+
+    function render(profile, content, pubs, hasPhoto) {
+      const p = profile || {};
+      const sections = p.sections || {};
+      const links = p.links || {};
+      const linkList = Object.keys(links).filter(k => links[k]).map(k => ({ label: k, url: links[k] }));
+      const scholarUrl = links['Google Scholar'] || '#';
+      const m = p.metrics || {};
+      const hasMetrics = !!(m.citations || m.hindex);
+      const citations = m.citations ? Number(m.citations).toLocaleString() : '';
+      const areas = (p.areas || []).join('  ·  ');
+
+      let html = '';
+
+      // header
+      html += '<header class="header">';
+      html += '  <div class="photo">' + photoHtml(p, hasPhoto) + '</div>';
+      html += '  <div class="head-info">';
+      html += '    <h1 class="name">' + escapeHtml(p.name || '') +
+              ' <span class="zh">' + escapeHtml(p.nameZh || '') + '</span></h1>';
+      html += '    <div class="title">' + escapeHtml(p.title || '') + '</div>';
+      html += '    <div class="affiliation">' + escapeHtml(p.affiliation || '') + '</div>';
+      html += '    <div class="areas">' + escapeHtml(areas) + '</div>';
+      html += '    <nav class="links">';
+      for (const lk of linkList) {
+        html += '<a href="' + escapeHtml(lk.url) + '" target="_blank" rel="noopener">' +
+                escapeHtml(lk.label) + '</a>';
+      }
+      html += '    </nav>';
+      html += '  </div>';
+      html += '</header>';
+
+      // about
+      if (sectionShown(sections, 'about')) {
+        html += '<section><div class="label">About</div>' +
+                '<div class="prose">' + md(content.about) + '</div></section>';
+      }
+
+      // prospective
+      if (sectionShown(sections, 'prospective')) {
+        html += '<section class="prospective"><div class="label">Prospective Students</div>' +
+                '<div class="prose">' + md(content.prospective) + '</div></section>';
+      }
+
+      // news
+      if (sectionShown(sections, 'news')) {
+        html += '<section class="news"><div class="label" style="margin-bottom:6px;">News</div>' +
+                '<div class="prose">' + md(content.news) + '</div></section>';
+      }
+
+      // publications
+      if (sectionShown(sections, 'publications')) {
+        html += '<section>';
+        html += '  <div class="pub-head">';
+        html += '    <div class="label">Selected Publications</div>';
+        if (hasMetrics) {
+          html += '    <div class="metrics">' + escapeHtml(citations) +
+                  ' citations &middot; h-index ' + escapeHtml(String(m.hindex || '')) +
+                  ' &middot; <a href="' + escapeHtml(scholarUrl) +
+                  '" target="_blank" rel="noopener">Google Scholar</a></div>';
+        }
+        html += '  </div>';
+        html += '  <div class="pub-list">';
+        for (const pub of pubs) {
+          html += '<div class="pub">';
+          html += '  <div class="pub-meta">';
+          html += '    <div class="pub-venue">' + escapeHtml(pub.venue) + '</div>';
+          if (pub.award) html += '<div class="pub-award">' + escapeHtml(pub.award) + '</div>';
+          html += '  </div>';
+          html += '  <div>';
+          html += '    <div class="pub-title">' + escapeHtml(pub.title) + '</div>';
+          html += '    <div class="pub-authors">' + pub.authorsHtml + '</div>';
+          if (pub.links.length) {
+            html += '    <div class="pub-links">';
+            for (const l of pub.links) {
+              html += '<a href="' + escapeHtml(l.url) + '" target="_blank" rel="noopener">' +
+                      escapeHtml(l.label) + '</a>';
+            }
+            html += '    </div>';
+          }
+          html += '  </div>';
+          html += '</div>';
+        }
+        html += '  </div>';
+        const anyCoFirst = pubs.some(pub => pub.cofirst);
+        const anyCorr = pubs.some(pub => pub.corresponding);
+        if (anyCoFirst || anyCorr) {
+          const parts = [];
+          if (anyCoFirst) parts.push('<sup class="corr-mark">*</sup> Co-first author');
+          if (anyCorr) parts.push('<sup class="corr-mark">&dagger;</sup> Corresponding author');
+          html += '  <div class="pub-note">' + parts.join('&nbsp;&nbsp;&middot;&nbsp;&nbsp;') + '</div>';
+        }
+        html += '  <div class="pub-foot">Full list on <a href="' + escapeHtml(scholarUrl) +
+                '" target="_blank" rel="noopener">Google Scholar &rarr;</a></div>';
+        html += '</section>';
+      }
+
+      // awards
+      if (sectionShown(sections, 'awards')) {
+        html += '<section><div class="label" style="margin-bottom:10px;">Honors &amp; Awards</div>' +
+                '<div class="prose">' + md(content.awards) + '</div></section>';
+      }
+
+      // service
+      if (sectionShown(sections, 'service')) {
+        html += '<section><div class="label" style="margin-bottom:10px;">Academic Service</div>' +
+                '<div class="prose">' + md(content.service) + '</div></section>';
+      }
+
+      // contact
+      if (sectionShown(sections, 'contact')) {
+        html += '<section><div class="label" style="margin-bottom:12px;">Contact</div>';
+        html += '  <div class="contact-grid">';
+        html += '    <div class="contact-key">Email</div>';
+        html += '    <div><a href="mailto:' + escapeHtml(p.email || '') + '">' +
+                escapeHtml(p.email || '') + '</a></div>';
+        html += '    <div class="contact-key">Office</div>';
+        html += '    <div>' + escapeHtml(p.office || '') + '</div>';
+        html += '  </div>';
+        html += '</section>';
+      }
+
+      // footer
+      html += '<footer><span>&copy; 2026 ' + escapeHtml(p.name || '') +
+              '</span><span>Updated June 2026</span></footer>';
+
+      document.getElementById('app').innerHTML = html;
+      if (p.name) document.title = p.name + ' — Homepage';
+    }
+
+    async function main() {
+      const [profileTxt, about, news, awards, service, prospective, bib] = await Promise.all([
+        get('profile.json'), get('content/about.md'), get('content/news.md'),
+        get('content/awards.md'), get('content/service.md'),
+        get('content/prospective.md'), get('publications.bib')
+      ]);
+
+      let profile = {};
+      try { profile = JSON.parse(profileTxt); } catch (e) {}
+
+      const content = { about, news, awards, service, prospective };
+      const pubs = parseBib(bib);
+
+      const photo = profile.photo || 'assets/profile.jpg';
+      const hasPhoto = await loadImage(photo);
+
+      render(profile, content, pubs, hasPhoto);
+    }
+
+    main();
+  </script>
+</body>
+</html>

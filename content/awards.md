@@ -1,0 +1,3 @@
+- **CVPR 2023 Highlight** &mdash; First-author paper *GRES* selected as a Highlight (top 2.6%) at CVPR 2023.
+- **ICLR 2026 Oral** &mdash; *Monocular Normal Estimation via Shading Sequence Estimation* selected for Oral presentation.
+- **Top-venue benchmarks** &mdash; Co-creator of widely-used datasets (MOSE, MeViS) now adopted as standard benchmarks for video segmentation.

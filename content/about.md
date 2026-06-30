@@ -1,0 +1,3 @@
+Chang Liu is an Assistant Professor at the School of Computer and Artificial Intelligence, Shanghai University of Finance and Economics (SUFE). His research centers on **computer vision, machine learning, and multi-modal learning**, with a focus on referring and language-guided visual understanding, video object segmentation, and image / video matting and editing.
+
+He received his B.Eng. from Harbin Institute of Technology (2018), and his M.Sc. (2019) and Ph.D. (2024) from Nanyang Technological University, Singapore. Before joining SUFE he was a Research Scientist at A\*STAR, Singapore (2023–2024) and at TikTok / ByteDance, Singapore (2024–2025). He has published more than ten CCF-A papers at top venues including CVPR, ICCV, TPAMI, and TIP, gathering 2,000+ citations.

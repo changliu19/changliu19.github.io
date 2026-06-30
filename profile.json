@@ -1,0 +1,29 @@
+{
+  "name": "Chang Liu",
+  "nameZh": "刘畅",
+  "title": "Assistant Professor",
+  "affiliation": "School of Computer and Artificial Intelligence, Shanghai University of Finance and Economics (SUFE)",
+  "email": "liuchang@sufe.edu.cn",
+  "office": "Room 1107, Research Building, SUFE",
+  "areas": ["Computer Vision", "Machine Learning", "Multi-modal Learning"],
+  "photo": "assets/profile.jpg",
+  "sections": {
+    "about": true,
+    "prospective": true,
+    "news": false,
+    "publications": true,
+    "awards": false,
+    "service": true,
+    "contact": true
+  },
+  "links": {
+    "Google Scholar": "https://scholar.google.com/citations?user=XlQP0GIAAAAJ",
+    "Email": "mailto:liuchang@sufe.edu.cn",
+    "SigmaLab SUFE": "https://sigma-sufe.com/"
+  },
+  "metrics": {
+    "citations": 2295,
+    "hindex": 15,
+    "i10": 16
+  }
+}

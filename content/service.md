@@ -1,0 +1,2 @@
+- **Reviewer** &mdash; CVPR, ICCV, ECCV, NeurIPS; and journals including TPAMI and TIP.
+- **Challenge &amp; Workshop Organizer** &mdash; Core organizer of several challenges and workshops at CVPR, ICCV, and ECCV (e.g., PVUW, LSVOS), attracting 100+ teams worldwide; the challenges have become among the most influential benchmarks in the area.
