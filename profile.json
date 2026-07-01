@@ -3,7 +3,8 @@
   "nameZh": "刘畅",
   "title": "Assistant Professor",
   "affiliation": "School of Computer and Artificial Intelligence, Shanghai University of Finance and Economics (SUFE)",
-  "email": "liuchang@sufe.edu.cn",
+  "emailUser": "liuchang",
+  "emailDomain": "sufe.edu.cn",
   "office": "Room 1107, Research Building, SUFE",
   "areas": ["Computer Vision", "Machine Learning", "Multi-modal Learning"],
   "photo": "assets/profile.jpg",
@@ -18,7 +19,7 @@
   },
   "links": {
     "Google Scholar": "https://scholar.google.com/citations?user=XlQP0GIAAAAJ",
-    "Email": "mailto:liuchang@sufe.edu.cn",
+    "Email": true,
     "SigmaLab SUFE": "https://sigma-sufe.com/"
   },
   "metrics": {

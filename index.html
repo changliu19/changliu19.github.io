@@ -3,9 +3,43 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Chang Liu — Homepage</title>
-  <meta name="description" content="Chang Liu — Assistant Professor at SUFE. Computer Vision, Machine Learning, Multi-modal Learning.">
-  <link rel="canonical" href="index.html">
+  <title>Chang Liu (刘畅) - SUFE</title>
+  <meta name="description" content="Chang Liu (刘畅) is an Assistant Professor at Shanghai University of Finance and Economics (SUFE), working on computer vision, machine learning, and multi-modal learning. Publications, awards, and contact.">
+  <link rel="canonical" href="https://changliu19.github.io/">
+
+  <meta property="og:type" content="profile">
+  <meta property="og:site_name" content="Chang Liu — Homepage">
+  <meta property="og:title" content="Chang Liu (刘畅) SUFE">
+  <meta property="og:description" content="Computer vision, machine learning, and multi-modal learning research at Shanghai University of Finance and Economics.">
+  <meta property="og:url" content="https://changliu19.github.io/">
+  <meta property="og:image" content="https://changliu19.github.io/assets/profile.jpg">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Chang Liu (刘畅) - SUFE">
+  <meta name="twitter:description" content="Computer vision, machine learning, and multi-modal learning research at Shanghai University of Finance and Economics.">
+  <meta name="twitter:image" content="https://changliu19.github.io/assets/profile.jpg">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Chang Liu",
+    "alternateName": "刘畅",
+    "url": "https://changliu19.github.io/",
+    "image": "https://changliu19.github.io/assets/profile.jpg",
+    "jobTitle": "Assistant Professor",
+    "affiliation": {
+      "@type": "CollegeOrUniversity",
+      "name": "Shanghai University of Finance and Economics",
+      "department": "School of Computer and Artificial Intelligence"
+    },
+    "knowsAbout": ["Computer Vision", "Machine Learning", "Multi-modal Learning"],
+    "sameAs": [
+      "https://scholar.google.com/citations?user=XlQP0GIAAAAJ",
+      "https://sigma-sufe.com/"
+    ]
+  }
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -182,11 +216,17 @@
 
     function sectionShown(sections, key) { return (sections || {})[key] !== false; }
 
+    function emailAddress(p) {
+      return (p.emailUser && p.emailDomain) ? (p.emailUser + '@' + p.emailDomain) : '';
+    }
+
     function render(profile, content, pubs, hasPhoto) {
       const p = profile || {};
       const sections = p.sections || {};
       const links = p.links || {};
-      const linkList = Object.keys(links).filter(k => links[k]).map(k => ({ label: k, url: links[k] }));
+      const email = emailAddress(p);
+      const linkList = Object.keys(links).filter(k => links[k]).map(k =>
+        links[k] === true ? { label: k, url: email ? 'mailto:' + email : '#' } : { label: k, url: links[k] });
       const scholarUrl = links['Google Scholar'] || '#';
       const m = p.metrics || {};
       const hasMetrics = !!(m.citations || m.hindex);
@@ -295,8 +335,8 @@
         html += '<section><div class="label" style="margin-bottom:12px;">Contact</div>';
         html += '  <div class="contact-grid">';
         html += '    <div class="contact-key">Email</div>';
-        html += '    <div><a href="mailto:' + escapeHtml(p.email || '') + '">' +
-                escapeHtml(p.email || '') + '</a></div>';
+        html += '    <div><a href="mailto:' + escapeHtml(email) + '">' +
+                escapeHtml(email) + '</a></div>';
         html += '    <div class="contact-key">Office</div>';
         html += '    <div>' + escapeHtml(p.office || '') + '</div>';
         html += '  </div>';
@@ -308,7 +348,6 @@
               '</span><span>Updated June 2026</span></footer>';
 
       document.getElementById('app').innerHTML = html;
-      if (p.name) document.title = p.name + ' - SUFE - Homepage';
     }
 
     async function main() {
