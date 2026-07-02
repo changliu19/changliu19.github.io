@@ -48,15 +48,28 @@
   <style>
     *{ box-sizing:border-box; }
     html,body{ margin:0; padding:0; }
-    body{ background:#fbfaf7; color:#1b1a17; font-family:'IBM Plex Sans',system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
+    body{
+      background:
+        radial-gradient(circle at 18% 0%, rgba(138,28,28,.055), transparent 28rem),
+        linear-gradient(180deg, #fbfaf7 0%, #f8f5ee 100%);
+      color:#1b1a17;
+      font-family:'IBM Plex Sans',system-ui,sans-serif;
+      -webkit-font-smoothing:antialiased;
+    }
     a{ color:#8a1c1c; text-decoration:none; }
 
     .wrap{ max-width:780px; margin:0 auto; padding:72px 28px 80px; }
 
     /* header */
     .header{ display:flex; gap:30px; align-items:flex-start; flex-wrap:wrap; }
-    .photo{ position:relative; width:128px; height:160px; flex:none; border-radius:4px; overflow:hidden; background:#efeae1; }
-    .photo img{ width:128px; height:160px; object-fit:cover; display:block; }
+    .photo{
+      position:relative; width:128px; height:160px; flex:none; border-radius:4px; overflow:hidden;
+      background:#efeae1; box-shadow:0 10px 26px rgba(51,49,44,.08);
+      transition:transform .22s ease, box-shadow .22s ease;
+    }
+    .photo:hover{ transform:translateY(-3px); box-shadow:0 16px 34px rgba(51,49,44,.13); }
+    .photo img{ width:128px; height:160px; object-fit:cover; display:block; transition:transform .5s ease; }
+    .photo:hover img{ transform:scale(1.035); }
     .photo .placeholder{
       position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
       text-align:center;
@@ -74,16 +87,26 @@
     nav.links a{
       display:inline-flex; align-items:center; font-family:'IBM Plex Mono',monospace;
       font-size:12px; letter-spacing:.03em; color:#33312c; border:1px solid #ddd6ca;
-      border-radius:999px; padding:5px 13px; transition:border-color .12s, color .12s;
+      border-radius:999px; padding:5px 13px; transition:border-color .16s ease, color .16s ease, background .16s ease, transform .16s ease;
     }
-    nav.links a:hover{ border-color:#8a1c1c; color:#8a1c1c; }
+    nav.links a:hover{ border-color:#8a1c1c; color:#8a1c1c; background:#fffdfa; transform:translateY(-1px); }
 
     /* section labels */
     section{ margin-top:44px; }
     .label{ font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:#8a1c1c; font-weight:600; margin-bottom:14px; }
 
     /* prospective callout */
-    section.prospective{ background:#f4efe6; border:1px solid #e9e1d3; border-radius:8px; padding:24px 26px; }
+    section.prospective{
+      position:relative; overflow:hidden;
+      background:#f4efe6; border:1px solid #e9e1d3; border-radius:8px; padding:24px 26px;
+      box-shadow:0 14px 34px rgba(51,49,44,.055);
+    }
+    section.prospective::after{
+      content:''; position:absolute; inset:0 auto 0 -45%; width:38%;
+      background:linear-gradient(90deg, transparent, rgba(255,255,255,.36), transparent);
+      transform:skewX(-18deg); animation:sweep 8s ease-in-out infinite;
+      pointer-events:none;
+    }
     section.prospective .label{ margin-bottom:10px; }
 
     /* publications */
@@ -92,15 +115,16 @@
     .metrics{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:#8d877b; }
     .metrics a{ color:#8d877b; border-bottom:1px solid #d8d2c6; }
     .pub-list{ display:flex; flex-direction:column; }
-    .pub{ display:grid; grid-template-columns:96px 1fr; gap:18px; padding:16px 0; border-top:1px solid #ece8e0; }
+    .pub{ display:grid; grid-template-columns:96px 1fr; gap:18px; padding:16px 0; border-top:1px solid #ece8e0; transition:background .16s ease, box-shadow .16s ease; }
+    .pub:hover{ background:rgba(255,255,255,.46); box-shadow:inset 3px 0 0 rgba(138,28,28,.42); }
     .pub-meta{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; line-height:1.5; padding-top:2px; }
     .pub-venue{ color:#8a1c1c; font-weight:500; }
     .pub-award{ display:inline-block; margin-top:5px; background:#8a1c1c; color:#fff; padding:1px 7px; border-radius:3px; font-size:10px; letter-spacing:.04em; }
     .pub-title{ font-size:15.5px; font-weight:600; line-height:1.4; color:#1b1a17; }
     .pub-authors{ margin-top:4px; font-size:13.5px; color:#6f6a60; line-height:1.5; }
     .pub-links{ margin-top:7px; display:flex; gap:8px; flex-wrap:wrap; }
-    .pub-links a{ font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.03em; color:#8a1c1c; border:1px solid #e0d2cf; border-radius:3px; padding:2px 8px; transition:background .12s, color .12s; }
-    .pub-links a:hover{ background:#8a1c1c; color:#fff; }
+    .pub-links a{ font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.03em; color:#8a1c1c; border:1px solid #e0d2cf; border-radius:3px; padding:2px 8px; transition:background .14s ease, color .14s ease, transform .14s ease; }
+    .pub-links a:hover{ background:#8a1c1c; color:#fff; transform:translateY(-1px); }
     .pub-foot{ margin-top:16px; font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:#8d877b; }
     .pub-foot a{ border-bottom:1px solid #d8d2c6; }
     .pub-note{ margin-top:12px; font-family:'IBM Plex Mono',monospace; font-size:11px; color:#8d877b; }
@@ -130,6 +154,43 @@
     .news .prose li{ display:block; border-top:1px solid #ece8e0; padding:11px 0; line-height:1.6; }
     .news .prose li:first-child{ border-top:none; }
     .news .prose li strong:first-child{ font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:#8a1c1c; margin-right:6px; }
+
+    .animate-in{ animation:fadeUp .52s cubic-bezier(.2,.7,.2,1) both; }
+    .reveal{
+      opacity:0;
+      transform:translateY(14px);
+      transition:opacity .5s ease, transform .5s cubic-bezier(.2,.7,.2,1);
+      transition-delay:var(--delay, 0ms);
+    }
+    .pub.reveal{
+      transition:
+        opacity .5s ease,
+        transform .5s cubic-bezier(.2,.7,.2,1),
+        background .16s ease,
+        box-shadow .16s ease;
+      transition-delay:var(--delay, 0ms), var(--delay, 0ms), 0ms, 0ms;
+    }
+    .reveal.is-visible{ opacity:1; transform:translateY(0); }
+
+    @keyframes fadeUp{
+      from{ opacity:0; transform:translateY(16px); }
+      to{ opacity:1; transform:translateY(0); }
+    }
+    @keyframes sweep{
+      0%, 68%{ transform:translateX(0) skewX(-18deg); }
+      100%{ transform:translateX(430%) skewX(-18deg); }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      *, *::before, *::after{
+        animation-duration:.001ms !important;
+        animation-iteration-count:1 !important;
+        scroll-behavior:auto !important;
+        transition-duration:.001ms !important;
+      }
+      .reveal{ opacity:1; transform:none; }
+      .photo:hover, .photo:hover img, nav.links a:hover, .pub:hover, .pub-links a:hover{ transform:none; }
+    }
   </style>
 </head>
 <body>
@@ -348,6 +409,37 @@
               '</span><span>Updated June 2026</span></footer>';
 
       document.getElementById('app').innerHTML = html;
+      enhanceMotion();
+    }
+
+    function enhanceMotion() {
+      const app = document.getElementById('app');
+      const reduceMotion = window.matchMedia &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      const header = app.querySelector('.header');
+      if (header) header.classList.add('animate-in');
+
+      const revealItems = [...app.querySelectorAll('section, .pub')];
+      revealItems.forEach((el, i) => {
+        el.classList.add('reveal');
+        el.style.setProperty('--delay', Math.min(i * 42, 260) + 'ms');
+      });
+
+      if (reduceMotion || !('IntersectionObserver' in window)) {
+        revealItems.forEach(el => el.classList.add('is-visible'));
+        return;
+      }
+
+      const observer = new IntersectionObserver((entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+
+      revealItems.forEach(el => observer.observe(el));
     }
 
     async function main() {
