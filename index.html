@@ -73,6 +73,16 @@
     }
     .photo:hover{ transform:rotate(-2.5deg) scale(1.03); box-shadow:0 16px 34px rgba(51,49,44,.13); }
     .photo.shake{ animation:photo-shake .55s var(--spring); }
+    .photo.knocked{
+      pointer-events:none;
+      animation:photo-knocked .95s cubic-bezier(.17,.84,.44,1) both;
+      transform-origin:18% 18%;
+    }
+    .photo.knocked img,
+    .photo.knocked .placeholder{
+      animation:photo-squash .95s cubic-bezier(.17,.84,.44,1) both;
+      transform-origin:50% 18%;
+    }
     .photo img{ width:128px; height:160px; object-fit:cover; display:block; border-radius:4px; transition:transform .5s ease; }
     .photo:hover img{ transform:scale(1.035); }
     .photo .placeholder{
@@ -89,6 +99,13 @@
       display:flex; align-items:center; justify-content:center;
       font-size:17px; line-height:1; pointer-events:none;
       animation:pill-pop .5s var(--spring) both;
+    }
+    .photo-hit{
+      position:absolute; top:-24px; left:88px; z-index:5;
+      font-size:28px; line-height:1; pointer-events:none;
+      filter:drop-shadow(0 3px 3px rgba(27,26,23,.18));
+      animation:photo-hit .58s var(--spring) both;
+      transform-origin:20% 80%;
     }
     .head-info{ flex:1; min-width:260px; }
     h1.name{ margin:0; font-size:30px; font-weight:600; letter-spacing:-.01em; line-height:1.15; }
@@ -246,6 +263,25 @@
       60%{ transform:rotate(-3deg); }
       80%{ transform:rotate(2deg); }
       100%{ transform:rotate(0deg); }
+    }
+    @keyframes photo-hit{
+      0%{ opacity:0; transform:translate(-18px,-18px) rotate(-34deg) scale(.72); }
+      24%{ opacity:1; transform:translate(0,0) rotate(0deg) scale(1.1); }
+      100%{ opacity:0; transform:translate(18px,18px) rotate(24deg) scale(.86); }
+    }
+    @keyframes photo-knocked{
+      0%{ transform:translate(0,0) rotate(0deg) scale(1); }
+      12%{ transform:translate(-7px,3px) rotate(-7deg) scale(1.02); }
+      30%{ transform:translate(26px,-18px) rotate(18deg) scale(1); }
+      62%{ transform:translate(112px,42px) rotate(68deg) scale(.94); opacity:1; }
+      86%{ transform:translate(156px,126px) rotate(102deg) scale(.82); opacity:0; }
+      100%{ transform:translate(156px,126px) rotate(102deg) scale(.82); opacity:0; }
+    }
+    @keyframes photo-squash{
+      0%, 100%{ transform:scale(1); }
+      12%{ transform:scale(1.08,.92); }
+      30%{ transform:scale(.94,1.06); }
+      86%{ transform:scale(.88); }
     }
 
     /* back-to-top cat */
@@ -525,6 +561,7 @@
       const photo = app.querySelector('.photo');
       if (photo) {
         photo.title = '点我一下 :)';
+        let photoClickCount = 0;
         // fall back to the placeholder if the photo is missing / fails to load
         const img = photo.querySelector('img');
         const showPlaceholder = () => {
@@ -542,9 +579,21 @@
           if (e.animationName === 'photo-shake') photo.classList.remove('shake');
         });
         photo.addEventListener('click', () => {
+          if (photo.classList.contains('knocked')) return;
+          photoClickCount += 1;
           photo.classList.remove('shake');
           void photo.offsetWidth; // restart the animation on rapid clicks
-          photo.classList.add('shake');
+          if (photoClickCount >= 6) {
+            photoClickCount = 0;
+            photo.classList.add('knocked');
+            const hit = document.createElement('span');
+            hit.className = 'photo-hit';
+            hit.textContent = '🔨';
+            photo.appendChild(hit);
+            setTimeout(() => hit.remove(), 900);
+          } else {
+            photo.classList.add('shake');
+          }
           const pop = document.createElement('span');
           pop.className = 'photo-pop';
           pop.textContent = emojis[Math.floor(Math.random() * emojis.length)];
