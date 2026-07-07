@@ -43,11 +43,15 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Long+Cang&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bibtex-parse-js@0.0.24/bibtexParse.js"></script>
   <style>
+    :root{ --spring:cubic-bezier(.34,1.56,.64,1); }
     *{ box-sizing:border-box; }
     html,body{ margin:0; padding:0; }
+    ::selection{ background:#ffe795; color:#1b1a17; }
+    ::-moz-selection{ background:#ffe795; color:#1b1a17; }
     body{
       background:
         radial-gradient(circle at 18% 0%, rgba(138,28,28,.055), transparent 28rem),
@@ -63,19 +67,28 @@
     /* header */
     .header{ display:flex; gap:30px; align-items:flex-start; flex-wrap:wrap; }
     .photo{
-      position:relative; width:128px; height:160px; flex:none; border-radius:4px; overflow:hidden;
-      background:#efeae1; box-shadow:0 10px 26px rgba(51,49,44,.08);
-      transition:transform .22s ease, box-shadow .22s ease;
+      position:relative; width:128px; height:160px; flex:none; border-radius:4px; overflow:visible;
+      background:#efeae1; box-shadow:0 10px 26px rgba(51,49,44,.08); cursor:pointer;
+      transition:transform .25s ease, box-shadow .25s ease;
     }
-    .photo:hover{ transform:translateY(-3px); box-shadow:0 16px 34px rgba(51,49,44,.13); }
-    .photo img{ width:128px; height:160px; object-fit:cover; display:block; transition:transform .5s ease; }
+    .photo:hover{ transform:rotate(-2.5deg) scale(1.03); box-shadow:0 16px 34px rgba(51,49,44,.13); }
+    .photo.shake{ animation:photo-shake .55s var(--spring); }
+    .photo img{ width:128px; height:160px; object-fit:cover; display:block; border-radius:4px; transition:transform .5s ease; }
     .photo:hover img{ transform:scale(1.035); }
     .photo .placeholder{
       position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
-      text-align:center;
+      text-align:center; border-radius:4px;
       background:repeating-linear-gradient(135deg,#efeae1,#efeae1 7px,#e7e1d6 7px,#e7e1d6 14px);
       font-family:'IBM Plex Mono',monospace; font-size:10px; color:#9a9183;
       letter-spacing:.05em; padding:8px; line-height:1.5;
+    }
+    .photo-pop{
+      position:absolute; top:-13px; right:-13px; z-index:3;
+      width:32px; height:32px; border-radius:50%;
+      background:#fff; border:1px solid #e6d3d0; box-shadow:0 2px 6px rgba(27,26,23,.14);
+      display:flex; align-items:center; justify-content:center;
+      font-size:17px; line-height:1; pointer-events:none;
+      animation:pill-pop .5s var(--spring) both;
     }
     .head-info{ flex:1; min-width:260px; }
     h1.name{ margin:0; font-size:30px; font-weight:600; letter-spacing:-.01em; line-height:1.15; }
@@ -85,23 +98,32 @@
     .areas{ margin-top:12px; font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:.06em; color:#8a1c1c; text-transform:uppercase; }
     nav.links{ margin-top:16px; display:flex; flex-wrap:wrap; gap:8px; }
     nav.links a{
-      display:inline-flex; align-items:center; font-family:'IBM Plex Mono',monospace;
+      position:relative; display:inline-flex; align-items:center; font-family:'IBM Plex Mono',monospace;
       font-size:12px; letter-spacing:.03em; color:#33312c; border:1px solid #ddd6ca;
-      border-radius:999px; padding:5px 13px; transition:border-color .16s ease, color .16s ease, background .16s ease, transform .16s ease;
+      border-radius:999px; padding:5px 13px; transition:border-color .18s ease, color .18s ease, background .18s ease, transform .18s ease;
     }
     nav.links a:hover{ border-color:#8a1c1c; color:#8a1c1c; background:#fffdfa; transform:translateY(-1px); }
+    nav.links a .pill-badge{
+      position:absolute; top:-10px; right:-8px; z-index:2;
+      width:21px; height:21px; border-radius:50%;
+      background:#fff; border:1px solid #e6d3d0; box-shadow:0 2px 6px rgba(27,26,23,.14);
+      display:flex; align-items:center; justify-content:center;
+      font-size:11px; line-height:1; opacity:0; transform:scale(0); pointer-events:none;
+    }
+    nav.links a:hover .pill-badge{ opacity:1; animation:pill-pop .5s var(--spring) both; }
 
     /* section labels */
     section{ margin-top:44px; }
     .label{ font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:#8a1c1c; font-weight:600; margin-bottom:14px; }
 
     /* prospective callout */
-    section.prospective{
+    section.prospective{ position:relative; overflow:visible; }
+    .prospective-inner{
       position:relative; overflow:hidden;
       background:#f4efe6; border:1px solid #e9e1d3; border-radius:8px; padding:24px 26px;
       box-shadow:0 14px 34px rgba(51,49,44,.055);
     }
-    section.prospective::after{
+    .prospective-inner::after{
       content:''; position:absolute; inset:0 auto 0 -45%; width:38%;
       background:linear-gradient(90deg, transparent, rgba(255,255,255,.36), transparent);
       transform:skewX(-18deg); animation:sweep 8s ease-in-out infinite;
@@ -109,6 +131,22 @@
     }
     section.prospective .label{ margin-bottom:10px; }
     section.prospective .prose hr{ border:none; height:1px; background:#e0d5c0; margin:20px 0; }
+
+    /* sticky note */
+    .sticky-note{
+      position:absolute; top:-18px; right:18px; z-index:4;
+      max-width:250px; transform:rotate(3deg);
+      background:linear-gradient(180deg,#ffefae,#ffe795);
+      padding:11px 17px 12px; box-shadow:0 4px 10px rgba(27,26,23,.14);
+      font-family:'Long Cang','IBM Plex Sans',cursive; font-size:21px; line-height:1.35;
+      color:#5b4636; border-bottom:none;
+      transition:transform .2s var(--spring);
+    }
+    .sticky-note:hover{ transform:rotate(0) scale(1.04); color:#5b4636; }
+    .sticky-note .sticky-tape{
+      position:absolute; top:-8px; left:50%; width:46px; height:17px; margin-left:-23px;
+      background:rgba(255,255,255,.5); transform:rotate(-2deg);
+    }
 
     /* publications */
     .pub-head{ display:flex; align-items:baseline; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:6px; }
@@ -181,6 +219,36 @@
       0%, 68%{ transform:translateX(0) skewX(-18deg); }
       100%{ transform:translateX(430%) skewX(-18deg); }
     }
+    @keyframes pill-pop{
+      0%{ transform:scale(0) rotate(-40deg); }
+      55%{ transform:scale(1.25) rotate(10deg); }
+      75%{ transform:scale(.92) rotate(-5deg); }
+      100%{ transform:scale(1) rotate(0); }
+    }
+    @keyframes photo-shake{
+      0%{ transform:rotate(0deg); }
+      20%{ transform:rotate(-4deg); }
+      40%{ transform:rotate(4deg); }
+      60%{ transform:rotate(-3deg); }
+      80%{ transform:rotate(2deg); }
+      100%{ transform:rotate(0deg); }
+    }
+
+    /* back-to-top cat */
+    .to-top{
+      position:fixed; right:24px; bottom:24px; z-index:50;
+      width:46px; height:46px; border-radius:50%; padding:0;
+      background:#fff; border:1px solid #e6d3d0; box-shadow:0 2px 6px rgba(27,26,23,.14);
+      display:flex; align-items:center; justify-content:center;
+      font-size:22px; line-height:1; cursor:pointer;
+      opacity:0; transform:scale(0); pointer-events:none;
+      transition:opacity .18s ease, box-shadow .18s ease, transform .18s var(--spring);
+    }
+    .to-top.show{
+      opacity:1; transform:scale(1); pointer-events:auto;
+      animation:pill-pop .5s var(--spring);
+    }
+    .to-top.show:hover{ transform:translateY(-3px) rotate(-6deg); box-shadow:0 8px 18px rgba(27,26,23,.24); }
 
     @media (prefers-reduced-motion: reduce){
       *, *::before, *::after{
@@ -190,7 +258,8 @@
         transition-duration:.001ms !important;
       }
       .reveal{ opacity:1; transform:none; }
-      .photo:hover, .photo:hover img, nav.links a:hover, .pub:hover, .pub-links a:hover{ transform:none; }
+      .photo:hover, .photo:hover img, nav.links a:hover, .pub:hover, .pub-links a:hover,
+      .sticky-note, .sticky-note:hover, .to-top.show:hover{ transform:none; }
     }
   </style>
 </head>
@@ -220,13 +289,24 @@
 
     function escapeRegExp(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
 
-    function loadImage(src) {
-      return new Promise(res => {
-        const im = new Image();
-        im.onload = () => res(true);
-        im.onerror = () => res(false);
-        im.src = src;
-      });
+    function linkEmoji(label) {
+      const s = (label || '').toLowerCase().trim();
+      if (s.includes('scholar')) return '🎓';
+      if (s.includes('email')) return '💌';
+      if (s.includes('cv')) return '📄';
+      if (s.includes('github')) return '🐙';
+      if (s.includes('twitter') || s === 'x') return '🐦';
+      if (s.includes('linkedin')) return '💼';
+      if (s.includes('faculty') || s.includes('home')) return '🏫';
+      return '✨';
+    }
+
+    function pickLinkEmoji(label, overrides) {
+      const map = overrides || {};
+      const target = (label || '').toLowerCase().trim();
+      const key = Object.keys(map).find(k => k.toLowerCase().trim() === target);
+      if (key && map[key]) return map[key];
+      return linkEmoji(label);
     }
 
     function parseBib(src) {
@@ -268,12 +348,10 @@
         .sort((a, b) => b.year - a.year);
     }
 
-    function photoHtml(profile, hasPhoto) {
+    function photoHtml(profile) {
       const photo = (profile && profile.photo) || 'assets/profile.jpg';
-      if (hasPhoto) {
-        return '<img src="' + escapeHtml(photo) + '" alt="' + escapeHtml(profile.name || '') + '">';
-      }
-      return '<div class="placeholder">drop photo &rarr; assets/profile.jpg</div>';
+      return '<img src="' + escapeHtml(photo) + '" alt="' +
+             escapeHtml((profile && profile.name) || '') + '">';
     }
 
     function sectionShown(sections, key) { return (sections || {})[key] !== false; }
@@ -282,10 +360,11 @@
       return (p.emailUser && p.emailDomain) ? (p.emailUser + '@' + p.emailDomain) : '';
     }
 
-    function render(profile, content, pubs, hasPhoto) {
+    function render(profile, content, pubs) {
       const p = profile || {};
       const sections = p.sections || {};
       const links = p.links || {};
+      const linkEmojis = p.linkEmojis || {};
       const email = emailAddress(p);
       const linkList = Object.keys(links).filter(k => links[k]).map(k =>
         links[k] === true ? { label: k, url: email ? 'mailto:' + email : '#' } : { label: k, url: links[k] });
@@ -299,7 +378,7 @@
 
       // header
       html += '<header class="header">';
-      html += '  <div class="photo">' + photoHtml(p, hasPhoto) + '</div>';
+      html += '  <div class="photo">' + photoHtml(p) + '</div>';
       html += '  <div class="head-info">';
       html += '    <h1 class="name">' + escapeHtml(p.name || '') +
               ' <span class="zh">' + escapeHtml(p.nameZh || '') + '</span></h1>';
@@ -309,7 +388,8 @@
       html += '    <nav class="links">';
       for (const lk of linkList) {
         html += '<a href="' + escapeHtml(lk.url) + '" target="_blank" rel="noopener">' +
-                escapeHtml(lk.label) + '</a>';
+                escapeHtml(lk.label) +
+                '<span class="pill-badge" aria-hidden="true">' + pickLinkEmoji(lk.label, linkEmojis) + '</span></a>';
       }
       html += '    </nav>';
       html += '  </div>';
@@ -323,8 +403,15 @@
 
       // prospective
       if (sectionShown(sections, 'prospective')) {
-        html += '<section class="prospective"><div class="label">Prospective Students</div>' +
-                '<div class="prose">' + md(content.prospective) + '</div></section>';
+        const noteText = (p.stickyNote || '').trim();
+        const note = (noteText && email)
+          ? '<a class="sticky-note" href="mailto:' + escapeHtml(email) +
+            '" aria-label="' + escapeHtml(noteText) + '">' +
+            '<span class="sticky-tape" aria-hidden="true"></span>' + escapeHtml(noteText) + '</a>'
+          : '';
+        html += '<section class="prospective">' + note +
+                '<div class="prospective-inner"><div class="label">Prospective Students</div>' +
+                '<div class="prose">' + md(content.prospective) + '</div></div></section>';
       }
 
       // news
@@ -411,6 +498,60 @@
 
       document.getElementById('app').innerHTML = html;
       enhanceMotion();
+      enhanceEasterEggs(p);
+    }
+
+    function enhanceEasterEggs(profile) {
+      const app = document.getElementById('app');
+      const cfgEmojis = (profile && Array.isArray(profile.photoEmojis)) ? profile.photoEmojis : [];
+      const photoEmojis = cfgEmojis.filter(e => typeof e === 'string' && e.trim());
+      const emojis = photoEmojis.length ? photoEmojis : ['👋', '😆', '🤓', '☕', '🎉', '🐱'];
+
+      // photo: click to shake + pop a random emoji badge
+      const photo = app.querySelector('.photo');
+      if (photo) {
+        photo.title = '点我一下 :)';
+        // fall back to the placeholder if the photo is missing / fails to load
+        const img = photo.querySelector('img');
+        const showPlaceholder = () => {
+          if (!photo.querySelector('.placeholder')) {
+            photo.insertAdjacentHTML('afterbegin',
+              '<div class="placeholder">drop photo &rarr; assets/profile.jpg</div>');
+          }
+          if (img) img.remove();
+        };
+        if (img) {
+          if (img.complete && img.naturalWidth === 0) showPlaceholder();
+          else img.addEventListener('error', showPlaceholder);
+        }
+        photo.addEventListener('animationend', (e) => {
+          if (e.animationName === 'photo-shake') photo.classList.remove('shake');
+        });
+        photo.addEventListener('click', () => {
+          photo.classList.remove('shake');
+          void photo.offsetWidth; // restart the animation on rapid clicks
+          photo.classList.add('shake');
+          const pop = document.createElement('span');
+          pop.className = 'photo-pop';
+          pop.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+          photo.appendChild(pop);
+          setTimeout(() => pop.remove(), 1200);
+        });
+      }
+
+      // back-to-top cat
+      if (!document.querySelector('.to-top')) {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'to-top';
+        btn.title = '回到顶部';
+        btn.textContent = '🐈';
+        btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        document.body.appendChild(btn);
+        const onScroll = () => { btn.classList.toggle('show', window.scrollY > 360); };
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+      }
     }
 
     function enhanceMotion() {
@@ -456,10 +597,7 @@
       const content = { about, news, awards, service, prospective };
       const pubs = parseBib(bib);
 
-      const photo = profile.photo || 'assets/profile.jpg';
-      const hasPhoto = await loadImage(photo);
-
-      render(profile, content, pubs, hasPhoto);
+      render(profile, content, pubs);
     }
 
     main();

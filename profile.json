@@ -8,6 +8,7 @@
   "office": "Room 1107, Research Building, SUFE",
   "areas": ["Computer Vision", "Machine Learning", "Multi-modal Learning"],
   "photo": "assets/profile.jpg",
+  "stickyNote": "",
   "sections": {
     "about": true,
     "prospective": true,
@@ -22,6 +23,12 @@
     "Email": true,
     "SigmaLab SUFE": "https://sigma-sufe.com/"
   },
+  "linkEmojis": {
+    "Google Scholar": "🎓",
+    "Email": "💬",
+    "SigmaLab SUFE": "👾"
+  },
+  "photoEmojis": ["👋", "👻", "☕", "🎉", "🐱"],
   "metrics": {
     "citations": 2330,
     "hindex": 15,
