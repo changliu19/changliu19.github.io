@@ -246,6 +246,13 @@
     .prose strong{ color:#1b1a17; font-weight:600; }
     .prose a{ color:#8a1c1c; border-bottom:1px solid rgba(138,28,28,.25); }
     .prose a:hover{ border-bottom-color:#8a1c1c; }
+    /* affiliations: italic + dotted underline, colored only on hover */
+    .prose a.org{
+      font-style:italic; color:inherit;
+      border-bottom:1px dotted #bdb4a5;
+      transition:color .16s ease, border-bottom-color .16s ease;
+    }
+    .prose a.org:hover{ color:#8a1c1c; border-bottom-color:rgba(138,28,28,.6); }
     .prose h3{ font-size:12px; letter-spacing:.12em; text-transform:uppercase; font-family:'IBM Plex Mono',monospace; color:#8a1c1c; font-weight:600; margin:24px 0 10px; }
     .prose ul{ margin:0 0 14px; padding:0; list-style:none; }
     .prose li{ position:relative; padding:4px 0 4px 18px; }
