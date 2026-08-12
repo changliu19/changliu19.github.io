@@ -397,6 +397,19 @@
       return linkEmoji(label);
     }
 
+    // corner sticker for the highlight card: { emoji, text, url, aria }
+    function stickerHtml(sticker) {
+      const s = sticker || {};
+      const emoji = (s.emoji || '').trim();
+      const text = (s.text || '').trim();
+      if (!emoji && !text) return '';
+      const body = (emoji ? '<span class="sticker-emoji" aria-hidden="true">' + escapeHtml(emoji) + '</span>' : '') +
+                   escapeHtml(text);
+      if (!s.url) return '<span class="highlight-sticker">' + body + '</span>';
+      return '<a class="highlight-sticker" href="' + escapeHtml(s.url) + '" target="_blank" rel="noopener"' +
+             ' aria-label="' + escapeHtml(s.aria || text || emoji) + '">' + body + '</a>';
+    }
+
     function parseBib(src) {
       if (!src || !window.bibtexParse) return [];
       let entries = [];
@@ -491,11 +504,10 @@
 
       // highlight
       if (sectionShown(sections, 'highlight') && content.highlight) {
-        html += '<section class="highlight">' +
-                '<a class="highlight-sticker" href="https://lsvos.github.io/" target="_blank" rel="noopener"' +
-                ' aria-label="LSVOS 2026 workshop website">' +
-                '<span class="sticker-emoji" aria-hidden="true">🎬</span>Sep 9 · Malmö</a>' +
-                '<div class="highlight-inner"><div class="label">ECCV 2026 Workshop</div>' +
+        const hl = p.highlight || {};
+        html += '<section class="highlight">' + stickerHtml(hl.sticker) +
+                '<div class="highlight-inner">' +
+                '<div class="label">' + escapeHtml(hl.label || 'Highlight') + '</div>' +
                 '<div class="prose">' + md(content.highlight) + '</div></div></section>';
       }
 
@@ -608,7 +620,7 @@
       // photo: click to shake + pop a random emoji badge
       const photo = app.querySelector('.photo');
       if (photo) {
-        photo.title = '点我一下 :)';
+        photo.title = '';
         let photoClickCount = 0;
         // fall back to the placeholder if the photo is missing / fails to load
         const img = photo.querySelector('img');

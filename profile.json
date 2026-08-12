@@ -9,6 +9,15 @@
   "areas": ["Computer Vision", "Machine Learning", "Multi-modal Learning"],
   "photo": "assets/profile.jpg",
   "stickyNote": "",
+  "highlight": {
+    "label": "ECCV 2026 Workshop",
+    "sticker": {
+      "emoji": "🎬",
+      "text": "Sep 9 · Malmö",
+      "url": "https://lsvos.github.io/",
+      "aria": "LSVOS 2026 workshop website"
+    }
+  },
   "sections": {
     "about": true,
     "highlight": true,
