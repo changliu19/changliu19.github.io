@@ -11,6 +11,7 @@
   "stickyNote": "",
   "sections": {
     "about": true,
+    "highlight": true,
     "prospective": true,
     "news": false,
     "publications": true,

@@ -133,6 +133,37 @@
     section{ margin-top:44px; }
     .label{ font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:#8a1c1c; font-weight:600; margin-bottom:14px; }
 
+    /* highlight callout */
+    section.highlight{ position:relative; overflow:visible; }
+    .highlight-inner{
+      position:relative; overflow:hidden;
+      background:#faeade; border:1px solid #f0d8c8; border-radius:8px; padding:20px 26px;
+      box-shadow:0 14px 34px rgba(51,49,44,.055);
+    }
+    .highlight-inner::after{
+      content:''; position:absolute; inset:0 auto 0 -45%; width:38%;
+      background:linear-gradient(90deg, transparent, rgba(255,255,255,.36), transparent);
+      transform:skewX(-18deg); animation:sweep 8s ease-in-out infinite;
+      pointer-events:none;
+    }
+    section.highlight .label{ margin-bottom:10px; }
+    section.highlight .prose p{ margin:0; }
+
+    /* highlight sticker */
+    .highlight-sticker{
+      position:absolute; top:-16px; right:16px; z-index:4;
+      display:flex; align-items:center; gap:6px;
+      transform:rotate(4deg);
+      background:linear-gradient(180deg,#fffdf9,#fdf4ea);
+      border:1px solid #ecdccb; border-radius:7px; padding:6px 11px;
+      box-shadow:0 4px 11px rgba(27,26,23,.13);
+      font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:.08em;
+      text-transform:uppercase; color:#8a1c1c; line-height:1;
+      transition:transform .2s var(--spring), box-shadow .2s ease;
+    }
+    .highlight-sticker:hover{ transform:rotate(-1deg) scale(1.06); box-shadow:0 7px 16px rgba(27,26,23,.16); }
+    .highlight-sticker .sticker-emoji{ font-size:14px; line-height:1; }
+
     /* prospective callout */
     section.prospective{ position:relative; overflow:visible; }
     .prospective-inner{
@@ -451,6 +482,16 @@
                 '<div class="prose">' + md(content.about) + '</div></section>';
       }
 
+      // highlight
+      if (sectionShown(sections, 'highlight') && content.highlight) {
+        html += '<section class="highlight">' +
+                '<a class="highlight-sticker" href="https://lsvos.github.io/" target="_blank" rel="noopener"' +
+                ' aria-label="LSVOS 2026 workshop website">' +
+                '<span class="sticker-emoji" aria-hidden="true">🎬</span>Sep 9 · Malmö</a>' +
+                '<div class="highlight-inner"><div class="label">ECCV 2026 Workshop</div>' +
+                '<div class="prose">' + md(content.highlight) + '</div></div></section>';
+      }
+
       // prospective
       if (sectionShown(sections, 'prospective')) {
         const noteText = (p.stickyNote || '').trim();
@@ -648,16 +689,16 @@
     }
 
     async function main() {
-      const [profileTxt, about, news, awards, service, prospective, bib] = await Promise.all([
+      const [profileTxt, about, news, awards, service, highlight, prospective, bib] = await Promise.all([
         get('profile.json'), get('content/about.md'), get('content/news.md'),
         get('content/awards.md'), get('content/service.md'),
-        get('content/prospective.md'), get('publications.bib')
+        get('content/highlight.md'), get('content/prospective.md'), get('publications.bib')
       ]);
 
       let profile = {};
       try { profile = JSON.parse(profileTxt); } catch (e) {}
 
-      const content = { about, news, awards, service, prospective };
+      const content = { about, news, awards, service, highlight, prospective };
       const pubs = parseBib(bib);
 
       render(profile, content, pubs);

@@ -1,0 +1,1 @@
+We are organizing the **8th LSVOS Workshop & Challenge** on large-scale video object segmentation at **ECCV 2026** in Malmö, Sweden. Come join us on the afternoon of Sept 9 — I would be happy to chat there. [Workshop website →](https://lsvos.github.io/)
