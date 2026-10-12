@@ -5,7 +5,7 @@
   "affiliation": "School of Computer and Artificial Intelligence, Shanghai University of Finance and Economics (SUFE)",
   "emailUser": "liuchang",
   "emailDomain": "sufe.edu.cn",
-  "office": "Room 1107, Research Building, SUFE",
+  "office": "Room 204, School of Computer and Artificial Intelligence",
   "areas": ["Computer Vision", "Machine Learning", "Multi-modal Learning"],
   "photo": "assets/profile.jpg",
   "stickyNote": "",
@@ -20,7 +20,7 @@
   },
   "sections": {
     "about": true,
-    "highlight": true,
+    "highlight": false,
     "prospective": true,
     "news": false,
     "publications": true,
